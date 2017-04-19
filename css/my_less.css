@@ -1,0 +1,41 @@
+.shadow{
+	box-shadow:1px 1px 1px #ddd;
+}
+body{
+	font-size:62.5%;
+}
+@tagsHeight:4rem;
+
+.wrap{
+	font-size:14px;
+}
+iframe{
+	border:none;
+	width:100%;
+	.shadow;
+}
+.tabs{
+	width:100%;
+	display:table;
+	li{
+		display:block;
+		width:25%;
+		height:@tagsHeight;
+		display:table-cell;
+		line-height:@tagsHeight;
+		text-align:center;
+	}
+}
+@media (min-width: 768px) {
+	iframe{
+		width:100% - @tagsHeight * 2;
+	}
+	.tabs{
+		width:@tagsHeight;
+		float:left;
+		li{
+			width:100%;
+			display:block;
+		}
+	}
+}

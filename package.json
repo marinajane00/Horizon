@@ -19,6 +19,7 @@
     "url": "https://github.com/marinajane00/Horizon/issues"
   },
   "homepage": "https://github.com/marinajane00/Horizon#readme",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
   }
 }
