@@ -1,4 +1,4 @@
 # Horizon
 A short video app.
-  解决了vue不支持templateURL的问题
+  使用vue组件实现tab切换
   ——4.20
