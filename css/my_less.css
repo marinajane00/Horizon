@@ -1,17 +1,25 @@
 .shadow{
 	box-shadow:1px 1px 1px #ddd;
 }
+html,body,#app,.wrap{
+	height:100%;
+}
 body{
 	font-size:62.5%;
 }
 @tagsHeight:4rem;
-
+/* index页面 */
+.v-link-active{
+	color:#000;
+}
 .wrap{
 	font-size:14px;
 }
 iframe{
 	border:none;
 	width:100%;
+	height:100%;
+	margin-bottom: -@tagsHeight;
 	.shadow;
 }
 .tabs{
@@ -24,11 +32,12 @@ iframe{
 		display:table-cell;
 		line-height:@tagsHeight;
 		text-align:center;
+		color:#888;
 	}
 }
 @media (min-width: 768px) {
 	iframe{
-		width:100% - @tagsHeight * 2;
+		width:100% -@tagsHeight*2;
 	}
 	.tabs{
 		width:@tagsHeight;
