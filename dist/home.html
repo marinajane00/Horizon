@@ -9,12 +9,33 @@
 <script src="../css/less.min.js" type="text/javascript"></script>
 </head>
 <body>
+	<div id="app" class='home'>
 	<div>home here</div>
+	所有视频：
+	<div v-for="i in d">
+		视频名称：
+		<p @click='toplay(i.name)' >{{i.name}}</p>
+		<img :src="url+i.src+'.png'" />
+	</div>
+	</div>
 <script src="../js/my_js.js"></script>
 <script src="../js/vue.js"></script>
-<script src="../js/vue-router.js"></script>
 <script>
-
+new Vue({
+	el:"#app",
+	data:{
+		d:null,
+		url:serverIP
+	},
+	methods:{
+		toplay:function(e){
+			openI("play.html"+myParse({name:e}));
+		}
+	},
+	created:function(){
+		this.d=xhr("video/find");
+	}
+});
 </script>
 </body>
 </html>

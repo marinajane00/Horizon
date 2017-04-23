@@ -1,6 +1,11 @@
 .shadow{
 	box-shadow:1px 1px 1px #ddd;
 }
+.round(@size:4rem){
+	width:@size;
+	height:@size;
+	border-radius:50%;
+}
 html,body,#app,.wrap{
 	height:100%;
 }
@@ -18,8 +23,7 @@ body{
 iframe{
 	border:none;
 	width:100%;
-	height:100%;
-	margin-bottom: -@tagsHeight;
+	height:70%;
 	.shadow;
 }
 .tabs{
@@ -35,9 +39,14 @@ iframe{
 		color:#888;
 	}
 }
+.personal{
+	.head{
+		.round();
+	}
+}
 @media (min-width: 768px) {
 	iframe{
-		width:100% -@tagsHeight*2;
+		width:90%;
 	}
 	.tabs{
 		width:@tagsHeight;

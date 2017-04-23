@@ -11,9 +11,6 @@
 header{
 	display:flex;
 }
-.process{
-	border:1px solid #ddd;
-}
 .hide{
 	display:none;
 }
@@ -26,13 +23,18 @@ header{
 		<p>我要投稿</p>
 		<span>投稿<span/>
 	</header>
-	<input type='text' placeholder="请输入标题"/>
-	<p class='toFile' @click="myTrigger()">选择文件
+	<input type='text' placeholder="请输入标题" id='name' />
+	<select value='生活' id='tag'>
+		<option>生活</option>
+		<option>预告</option>
+		<option>科普</option>
+	</select>
+	<p @click="myTrigger()">选择文件
 	<input type="file" @change='myLoad()' id='my_file' class='hide' />
 	</p>
 	<progress v-show="hasLoaded"></progress>
 	<div id='videoImg'></div>
-	<video src='' controls="controls" id='video' poster='../lib/img/url.png' preload="none" ></video>
+	<video src='' controls="controls" id='video' preload="none" ></video>
 	</div>
 <script src="../js/my_js.js"></script>
 <script src="../js/vue.js"></script>
@@ -44,26 +46,74 @@ var vm=new Vue({
 		hasLoaded:false
 	},
 	methods:{
-		//post上传文件
-		myLoad:function(){
-			upload("my_file",function(){
-				vm.hasLoaded=true;
-				//控制进度条
-				<!-- video.currentTime=0; -->
-			},function(){
-				setTimeout(function(){
-					vm.hasLoaded=false;
-					//截图
-					capture(0.5,videoImg);
-				},1000);
-			});
-		},
 		//触发选择文件
 		myTrigger:function(){
 			my_file.click();
+		},
+		myLoad:function(){
+			//视频记录
+			var data=xhr("video/insert",{
+					userid:storageG("userid"),
+					username:storageG("username"),
+					name:$id("name").value,
+					src:storageG("userid")+$id("name").value,
+					tag:$id("tag").value
+				});
+			//视频文件
+			upload("my_file",function(){
+				vm.hasLoaded=true;
+			},function(){
+				setTimeout(function(){
+					vm.hasLoaded=false;
+					//截图文件
+					capture(1,$id("videoImg"));
+				},1000);
+			});
 		}
 	}
 });
+//上传文件:input的id，上传中执行，上传成功执行
+function upload(id,load,loaded) { 
+	//获取文件
+	var reader = new FileReader();
+	var file=$id(id).files[0];
+	//编码
+	reader.readAsDataURL(file);
+	//把上传的文件显示到页面中(url)
+	var url = window.webkitURL.createObjectURL(file) ;
+	video.src=url;
+	reader.onload = function(e) {
+　　　　//上传文件
+		load();
+		xhrPOST("public",{
+			format:".mp4",
+			userid:storageG("userid"),
+			name:$id("name").value},
+		e.target.result);
+		console.log("本次传输已完成");
+	}
+	reader.onloadend=function(){
+		loaded();
+	}
+}
+//视频截图:缩放大小，添加到哪个父元素
+function capture(scale,e){
+	var scale = scale; 
+    var canvas = document.createElement("canvas");  
+    canvas.width = video.videoWidth * scale;  
+    canvas.height = video.videoHeight * scale;  
+    canvas.getContext('2d')  
+       .drawImage(video, 0, 0, canvas.width, canvas.height); 
+    var img = document.createElement("img");  
+	var result=canvas.toDataURL();
+    img.src= result;
+	e.appendChild(img);
+	xhrPOST("public",{
+		format:".png",
+		userid:storageG("userid"),
+		name:$id("name").value},
+	result);
+}
 </script>
 </body>
 </html>

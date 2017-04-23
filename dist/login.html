@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel='stylesheet' href='../css/reset.css'>
+<link rel="stylesheet/less" type="text/css" href="../css/my_less.css" />
+<script src="../css/less.min.js" type="text/javascript"></script>
+</head>
+<body>
+	<div id='app'>
+	<div>login here</div>
+	<input type='text' placeholder='请输入用户名' id='name' :value="my_name" />
+	<input type='password' placeholder='请输入密码' id='psw' :value="my_psw" />
+	<p @click="login" >登陆</p>
+	</div>
+<script src="../js/my_js.js"></script>
+<script src="../js/vue.js"></script>
+<script>
+new Vue({
+	el:'#app',
+	data:{
+		//自动登陆
+		my_name:storageG("username"),
+		my_psw:storageG("userpsw")
+	},
+	methods:{
+		login:function(){
+			var data=xhr("user/insert",{name:$id('name').value,psw:$id('psw').value});
+			console.log(data.ops[0]._id);
+			storageS("userid",data.ops[0]._id);
+			storageS("username",$id("name").value);
+			storageS("userpsw",$id("psw").value);
+			openP("../index.html");
+		}
+	},
+	created:function(){
+		console.log('ready----------');
+		if(this.my_name && this.my_psw){
+			console.log("可自动登陆")
+		}else{
+			console.log("暂不可")
+		}
+	}
+});
+//////////////////////////////////删除数据
+//xhr('user/remove');
+</script>
+</body>
+</html>

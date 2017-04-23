@@ -2,23 +2,70 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>personal</title>
+<title>Personal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel='stylesheet' href='../css/reset.css'>
 <link rel="stylesheet/less" type="text/css" href="../css/my_less.css" />
 <script src="../css/less.min.js" type="text/javascript"></script>
 </head>
 <body>
-	<div id='app'>personal here
-	<a href='public.html'>我要发布</a>
+	<div id="app" class='personal'>
+	<div>personal here</div>
+	<div>
+	<img v-if="d[0].src" :src="url+d[0].src+'.png'" class='head' />
+	<img v-else src='../lib/img/url.png' class='head' />
+	<p>用户姓名：{{d[0].name}}</p>
+	<span @click='like()'>我的收藏</span>
+	<span @click='comment()'>我的评论</span>
+	<span @click='issue()'>我的投稿</span>
+	<a href='javascript:openI("public.html");'>我要发布</a>
+	</div>
+	<div v-if="show=='like'" v-for="i in content">
+		<img :src="url+i[0].src+'.png'" />
+	</div>
+	<div v-if="show=='issue'" v-for="j in data">
+		<img :src="url+j.src+'.png'" />
+	</div>
 	</div>
 <script src="../js/my_js.js"></script>
 <script src="../js/vue.js"></script>
-<script src="../js/vue-router.js"></script>
 <script>
 new Vue({
-	el:"#app"
-});
+	el:"#app",
+	data:{
+		d:null,
+		url:serverIP,
+		data:null,
+		content:[],
+		show:""
+	},
+	methods:{
+		like:function(){
+			this.data=null;
+			this.show="like";
+			this.data=xhr("like/find",{user:storageG("username")});
+			this.content=[];
+			for(var i=0; i<this.data.length; i++){
+				this.content.push(xhr("video/find",{name:this.data[i].name}));
+			}
+		},
+		comment:function(){			
+			this.data=null;
+			this.show="comment";
+			this.data=xhr("comment/find",{user:storageG("username")});
+			this.content=[];
+		},
+		issue:function(){			
+			this.data=null;
+			this.show="issue";
+			this.data=xhr("video/find",{username:storageG("username")});
+			this.content=[];
+		}
+	},
+	created:function(){
+		this.d=xhr("user/find",{name:storageG("username")});
+	}
+})
 </script>
 </body>
 </html>

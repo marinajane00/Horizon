@@ -5,16 +5,40 @@
 <title>Discover</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel='stylesheet' href='../css/reset.css'>
-<link rel="stylesheet/less" type="text/css" href="../css/my_less.less" />
-<script src="../js/less.min.js" type="text/javascript"></script>
+<link rel="stylesheet/less" type="text/css" href="../css/my_less.css" />
+<script src="../css/less.min.js" type="text/javascript"></script>
 </head>
 <body>
-		<div>discover here</div>
+	<div id="app" class='discover'>
+	热门视频：
+	<div v-for="i in d">
+		视频名称：{{i.name}}
+		<img :src="url+i.src+'.png'" />
+	</div>
+	
+	分类视频：
+	<div v-for="i in d">
+		视频名称：{{i.name}}
+		<img :src="url+i.src+'.png'" />
+	</div>
+	</div>
 <script src="../js/my_js.js"></script>
 <script src="../js/vue.js"></script>
-<script src="../js/vue-router.js"></script>
 <script>
-
+new Vue({
+	el:"#app",
+	data:{
+		d:null,
+		tags:null,
+		url:serverIP
+	},
+	created:function(){
+		this.d=xhr("video/find");
+		for(var i=0;i<this.d.length;i++){
+			
+		}
+	}
+})
 </script>
 </body>
 </html>
