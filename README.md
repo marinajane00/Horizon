@@ -2,7 +2,7 @@
 A short video app.
 
 ## todo    
-* websoket客户端通信
+* websocket客户端通信
 * 双端实现
 
 ## log

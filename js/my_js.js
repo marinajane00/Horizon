@@ -59,6 +59,42 @@ function xhrPOST(url,query,data){
 	console.log(xmlHttp.responseText);
 	return xmlHttp.responseText;
 }
+//视频截图:获取的对象，类型，添加到哪个父元素
+function capture(item,type,e){
+    var canvas = document.createElement("canvas");  
+	if(type == "video"){
+		canvas.width = item.videoWidth;  
+		canvas.height = item.videoHeight;  
+	}else{
+		canvas.width = item.width;  
+		canvas.height = item.height;
+	}
+    canvas.getContext('2d')  
+       .drawImage(item, 0, 0, canvas.width, canvas.height); 
+    var img = document.createElement("img");  
+	var result=canvas.toDataURL();
+    img.src= result;
+	e.appendChild(img);
+	return result;
+}
+//上传文件:input的id，目标src的id，上传中执行，上传成功执行
+function upload(id,obj,load,loaded) { 
+	//获取文件
+	var reader = new FileReader();
+	var file=$id(id).files[0];
+	//编码
+	reader.readAsDataURL(file);
+	//把上传的文件显示到页面中(url)
+	var url = window.webkitURL.createObjectURL(file) ;
+	$id(obj).src=url;
+	reader.onload = function(e) {
+　　　　//上传文件
+		load(e);
+	}
+	reader.onloadend=function(){
+		loaded();
+	}
+}
 //-------------------------------------------判断客户端
 //存储
 function storageS(name,value){
@@ -75,4 +111,7 @@ function openP(e){
 //iframe打开新页面
 function openI(e){
 	parent.location.href=e;
+}
+function toast(e){
+	alert(e)
 }

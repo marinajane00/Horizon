@@ -9,14 +9,18 @@
 <script src="../css/less.min.js" type="text/javascript"></script>
 </head>
 <body>
-	<div id="app" class='fork'>
-	作者：
-	<div v-for="(index,i) in d">
-		作者名称：{{i.name}}
+	<div id="app" class='fork'>fork here
+	<div v-for="(index,i) in d" class="wrap">
+		作者名称：{{i.name}}头像：
 		全部视频：{{video[index].length}}
-		<div v-for="j in video[index]">
-			视频名称：{{j.name}}
-			<img :src="url+j.src+'.png'" />
+		<div class='scrollitem'>
+		<div class='itemwrap' :style='width(video[index].length*100)'>
+			<div v-for="j in video[index]" class='item' :style='width(100/video[index].length)' @click='toplay(j.name)' >
+				<p class='thetag'><span>&nbsp;#{{j.tag}}&nbsp;</span></p>
+				<img :src="url+j.src+'.png'" />
+				<h2 class='thetitles'>{{j.name}}</h2>
+			</div>
+		</div>
 		</div>
 	</div>
 	
@@ -32,10 +36,19 @@ new Vue({
 		video:[],
 		url:serverIP
 	},
+	methods:{
+		toplay:function(e){
+			openI("play.html"+myParse({name:e}));
+		},
+		width:function(e){
+			return "width:"+e+"%;"
+		}
+	},
 	created:function(){
 		this.d=xhr("user/find");
+		log(this.d)
 		for(var i=0; i<this.d.length; i++){
-			this.video.push(xhr("video/find",{user:this.d[i].name}));
+			this.video.push(xhr("video/find",{username:this.d[i].name}));
 		}
 	}
 })

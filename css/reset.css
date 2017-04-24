@@ -103,8 +103,7 @@ a {
   a:active, a:hover {
     outline: 0;
     /* 2 */ }
-  a:hover {
-    color: #006699; }
+  a:hover {}
 
 /* Text-level semantics
    ========================================================================== */

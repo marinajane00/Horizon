@@ -10,16 +10,27 @@
 </head>
 <body>
 	<div id="app" class='discover'>
-	热门视频：
-	<div v-for="i in d">
-		视频名称：{{i.name}}
-		<img :src="url+i.src+'.png'" />
+	<div class='wrap'>discover here
+	<div class='tabs'>
+		<a href="javascript:;" class='tab'><span @click='active=true' :class='active?"active":""'>热门排行</span></a>
+		<a href="javascript:;" class='tab'><span @click='active=false' :class='active?"":"active"'>分类视频</span></a>
 	</div>
-	
-	分类视频：
-	<div v-for="i in d">
-		视频名称：{{i.name}}
+	<a href='javascript:;' v-if="active==true" v-for="i in d" class='item' @click='toplay(i.name)'>
+		<h2 class='thetitles'>{{i.name}}</h2>
+		<p class='thetag'><span>&nbsp;#{{i.tag}}&nbsp;</span></p>
 		<img :src="url+i.src+'.png'" />
+	</a>
+	
+	<div v-if="active==false" v-for="(index,i) in tags" class='scrollitem'>
+		<h1>{{i}}</h1>
+		<div class='itemwrap' :style='width(tagvideo[index].length*100)'>
+		<a href='javascript:;' v-for='j in tagvideo[index]' @click='toplay(j.name)' class='item' :style='width(100/tagvideo[index].length)'>
+			<img :src="url+j.src+'.png'" />
+			<h2 class='thetitles'>{{j.name}}</h2>
+			<p class='thetag'><span>&nbsp;#{{j.tag}}&nbsp;</span></p>
+		</a>
+		</div>
+	</div>
 	</div>
 	</div>
 <script src="../js/my_js.js"></script>
@@ -30,13 +41,32 @@ new Vue({
 	data:{
 		d:null,
 		tags:null,
-		url:serverIP
+		tagvideo:[],
+		url:serverIP,
+		active:true
+	},
+	methods:{
+		toplay:function(e){
+			openI("play.html"+myParse({name:e}));
+		},
+		width:function(e){
+			return "width:"+e+"%;"
+		}
 	},
 	created:function(){
 		this.d=xhr("video/find");
+		var res = [];
+		var json = {};
 		for(var i=0;i<this.d.length;i++){
-			
+			if(!json[this.d[i].tag]){
+				res.push(this.d[i].tag);
+				json[this.d[i].tag] = true;
+			}
 		}
+		this.tags=res;
+		for(var j=0; j<this.tags.length;j++){
+			this.tagvideo.push(xhr("video/find",{tag:this.tags[j]}));
+		}	
 	}
 })
 </script>

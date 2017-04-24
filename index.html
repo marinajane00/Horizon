@@ -9,8 +9,8 @@
 <script src="css/less.min.js" type="text/javascript"></script>
 </head>
 <body>
-<div id='app'>
-	<div class='wrap'>
+<div id='app' class='index'>
+	<div class='indexwrap'>
 	<router-view></router-view>
 	<ul class='tabs'>
 		<li v-link="{ path: '/home'}">精选</li>
@@ -26,16 +26,16 @@
 <script>
 //新建组件们
 var Home = Vue.extend({
-    template: '<iframe src="dist/home.html" scrolling="no" ></iframe>'
+    template: '<iframe src="dist/home.html" ></iframe>'
 });
 var Discover = Vue.extend({
-    template: '<iframe src="dist/discover.html" scrolling="no" ></iframe>'
+    template: '<iframe src="dist/discover.html" ></iframe>'
 });
 var Fork = Vue.extend({
-    template: '<iframe src="dist/fork.html" scrolling="no" ></iframe>'
+    template: '<iframe src="dist/fork.html" ></iframe>'
 });
 var Personal = Vue.extend({
-    template: '<iframe src="dist/personal.html" scrolling="no" ></iframe>'
+    template: '<iframe src="dist/personal.html" ></iframe>'
 });
 
 //实例化router

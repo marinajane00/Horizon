@@ -10,12 +10,16 @@
 </head>
 <body>
 	<div id="app" class='home'>
-	<div>home here</div>
-	所有视频：
-	<div v-for="i in d">
-		视频名称：
-		<p @click='toplay(i.name)' >{{i.name}}</p>
+	<div class='wrap'>home here
+	<div v-for="i in d" class='item'>
+		<a href='javascript:;' @click='toplay(i.name)' class='awrap'>
+		<div class='word'>
+		<p class='wordtitle'>{{i.name}}</p>
+		<p class='thetag'><span class='bgWhite'>&nbsp;#{{i.tag}}&nbsp;</span></p>
+		</div>
 		<img :src="url+i.src+'.png'" />
+		</a>
+	</div>
 	</div>
 	</div>
 <script src="../js/my_js.js"></script>

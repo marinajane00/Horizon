@@ -10,26 +10,47 @@
 </head>
 <body>
 	<div id="app" class='personal'>
-	<div>personal here</div>
-	<div>
-	<img v-if="d[0].src" :src="url+d[0].src+'.png'" class='head' />
-	<img v-else src='../lib/img/url.png' class='head' />
-	<p>用户姓名：{{d[0].name}}</p>
-	<span @click='like()'>我的收藏</span>
-	<span @click='comment()'>我的评论</span>
-	<span @click='issue()'>我的投稿</span>
-	<a href='javascript:openI("public.html");'>我要发布</a>
-	</div>
+	<div class='wrap'>
+		<div class='info'>
+		<img :src="url+d[0].src+'.png'" class='head' />
+		<p class='user'>{{d[0].name}}<span>修改</span></p>
+		<ul class='icons' v-if="switchs">
+		<li class='icon' :class='active==1?"theme":""' @click='like()'>收藏</li>
+		<li class='icon' :class='active==2?"theme":""' @click='comment()'>评论</li>
+		<li class='icon' :class='active==3?"theme":""' @click='issue()'>投稿</li>
+		</ul>
+		</div>
+		<ul class='tabs' v-if="!switchs" @click='switchs=true'>
+		<li class='tab' @click='like()'>我的收藏</li>
+		<li class='tab' @click='comment()'>我的评论</li>
+		<li class='tab' @click='issue()'>我的投稿</li>
+		<li class='tab'><a href='javascript:openI("public.html");'>我要发布</a></li>
+		</ul>
 	<div v-if="show=='like'" v-for="i in content">
-		<img :src="url+i[0].src+'.png'" />
+		<a href='javascript:;' @click='toplay(i.name)'>
+		<img :src="url+i.src+'.png'" />
+		</a>
+	</div>
+	<div v-if="show=='comment'" v-for="i in data" class='comment'>
+		<div class='img'>
+		<img :src="imgs()" />
+		</div>
+		<div class='item'>
+		<p>{{i.user}}</p>
+		<p>{{i.word}}</p>
+		</div>
 	</div>
 	<div v-if="show=='issue'" v-for="j in data">
+		<a href='javascript:;' @click='toplay(j.name)'>
 		<img :src="url+j.src+'.png'" />
+		</a>
+	</div>
 	</div>
 	</div>
 <script src="../js/my_js.js"></script>
 <script src="../js/vue.js"></script>
 <script>
+window.onload=function(){
 new Vue({
 	el:"#app",
 	data:{
@@ -37,35 +58,42 @@ new Vue({
 		url:serverIP,
 		data:null,
 		content:[],
-		show:""
+		show:"",
+		active:1,
+		switchs:false
 	},
 	methods:{
+		toplay:function(e){
+			openI("play.html"+myParse({name:e}));
+		},
+		imgs:function(){
+			return this.url+xhr("user/find",{name:storageG('username')})[0].src+'.png';
+		},
 		like:function(){
-			this.data=null;
+			this.active=1;
 			this.show="like";
 			this.data=xhr("like/find",{user:storageG("username")});
 			this.content=[];
 			for(var i=0; i<this.data.length; i++){
-				this.content.push(xhr("video/find",{name:this.data[i].name}));
+				this.content.push(xhr("video/find",{username:this.data[i].name}));
 			}
 		},
 		comment:function(){			
-			this.data=null;
-			this.show="comment";
+			this.active=2;
+			this.show="comment";   
 			this.data=xhr("comment/find",{user:storageG("username")});
-			this.content=[];
 		},
-		issue:function(){			
-			this.data=null;
+		issue:function(){	
+			this.active=3;
 			this.show="issue";
 			this.data=xhr("video/find",{username:storageG("username")});
-			this.content=[];
 		}
 	},
 	created:function(){
 		this.d=xhr("user/find",{name:storageG("username")});
 	}
 })
+}
 </script>
 </body>
 </html>

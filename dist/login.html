@@ -9,11 +9,23 @@
 <script src="../css/less.min.js" type="text/javascript"></script>
 </head>
 <body>
-	<div id='app'>
-	<div>login here</div>
-	<input type='text' placeholder='请输入用户名' id='name' :value="my_name" />
-	<input type='password' placeholder='请输入密码' id='psw' :value="my_psw" />
-	<p @click="login" >登陆</p>
+	<div id='app' class='login'>
+		<div class='wrap'>
+			<div class='item'>
+				<div class='head'>
+					<img src='../img/head.jpg' id='myhead' class='pointer'  @click="myTrigger()" />
+					<div id='videoImg' class='hide'></div>
+					<input type="file" @change='myLoad()' id='my_file' class='hide' />
+				</div>
+			</div>
+			<div class='item'>
+				<input type='text' placeholder='请输入用户名' id='name' :value="my_name" class='intext' />
+			</div>
+			<div class='item'>
+				<input type='password' placeholder='请输入密码' id='psw' :value="my_psw" class='intext' />
+			</div>
+		<a href='javascript:;' @click="login" class='alogin'>登陆</a>
+		</div>
 	</div>
 <script src="../js/my_js.js"></script>
 <script src="../js/vue.js"></script>
@@ -27,12 +39,25 @@ new Vue({
 	},
 	methods:{
 		login:function(){
-			var data=xhr("user/insert",{name:$id('name').value,psw:$id('psw').value});
+			var data=xhr("user/insert",{name:$id('name').value,psw:$id('psw').value,src:$id('name').value+$id('name').value});
 			console.log(data.ops[0]._id);
 			storageS("userid",data.ops[0]._id);
 			storageS("username",$id("name").value);
 			storageS("userpsw",$id("psw").value);
+			xhrPOST("public",{
+				format:".png",
+				userid:$id("name").value,
+				name:$id("name").value},
+			capture($id('myhead'),"img",$id('videoImg')));
 			openP("../index.html");
+		},
+		myTrigger:function(){
+			my_file.click();
+		},
+		myLoad:function(){
+			upload("my_file",'myhead',function(e){
+				console.log(e);
+			},function(){});
 		}
 	},
 	created:function(){
@@ -44,8 +69,6 @@ new Vue({
 		}
 	}
 });
-//////////////////////////////////删除数据
-//xhr('user/remove');
 </script>
 </body>
 </html>
