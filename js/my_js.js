@@ -1,6 +1,6 @@
 var URL='http://123.207.222.219:8080/';
 //服务器文件的存放地址
-var serverIP="http://123.207.222.219:7979/node/"
+var serverIP="http://123.207.222.219:8888/node/"
 //获取当天时间
 function getDate(e){
 	var d=new Date()
@@ -98,20 +98,44 @@ function upload(id,obj,load,loaded) {
 //-------------------------------------------判断客户端
 //存储
 function storageS(name,value){
-	localStorage.setItem(name,value);
+	if(window.plus != undefined){
+		plus.storage.setItem(name,value);
+	}else{
+		localStorage.setItem(name,value);
+	}
 }
 function storageG(name){
-	console.log(localStorage.getItem(name));
-	return localStorage.getItem(name);
+	if(window.plus != undefined){
+		log(plus.storage.getItem(name))
+		return plus.storage.getItem(name);
+	}else{
+		log(localStorage.getItem(name));
+		return localStorage.getItem(name);
+	}
 }
 //打开新页面
 function openP(e){
-	window.location.href=e;
+	if(window.plus != undefined){
+		plus.webview.open(e,"slide-in-left");
+	}else{
+		window.location.href=e;
+	}
 }
 //iframe打开新页面
 function openI(e){
-	parent.location.href=e;
+	if(window.plus != undefined){
+		plus.webview.open(e,"slide-in-left");
+	}else{
+		parent.location.href=e;
+	}
 }
 function toast(e){
 	alert(e)
 }
+(function(){
+	if(window.plus != undefined){
+		plus.key.addEventListener("backbutton",function(){
+			history.go(-1)
+		});
+	}
+})();

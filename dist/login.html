@@ -13,7 +13,7 @@
 		<div class='wrap'>
 			<div class='item'>
 				<div class='head'>
-					<img src='../img/head.jpg' id='myhead' class='pointer'  @click="myTrigger()" />
+					<img src='../img/head.png' id='myhead' class='pointer'  @click="myTrigger()" />
 					<div id='videoImg' class='hide'></div>
 					<input type="file" @change='myLoad()' id='my_file' class='hide' />
 				</div>
@@ -63,7 +63,9 @@ new Vue({
 	created:function(){
 		console.log('ready----------');
 		if(this.my_name && this.my_psw){
-			console.log("可自动登陆")
+			if(xhr("user/find",{name:this.my_name,psw:this.my_psw}).length>0){
+				openP("../index.html");
+			}
 		}else{
 			console.log("暂不可")
 		}
