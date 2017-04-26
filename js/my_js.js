@@ -1,6 +1,6 @@
-var URL='http://10.10.60.13:8080/';
+var URL='http://123.207.222.219:8080/';
 //服务器文件的存放地址
-var serverIP="http://10.10.60.13:7979/node/"
+var serverIP="http://123.207.222.219:7979/node/"
 //获取当天时间
 function getDate(e){
 	var d=new Date()
