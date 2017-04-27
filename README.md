@@ -1,9 +1,11 @@
 # Horizon
 A short video app.
 
+>在线访问地址——http://123.207.222.219:7979/dist/login.html
+
 ## todo    
 * websocket客户端通信
-* 双端实现
+* SDK
 
 ## log
 >使用vue组件实现tab切换
@@ -39,8 +41,7 @@ A short video app.
 			
     *public		
     1./投稿 /
+	
+>4.24-25 服务器部署
 
->todo:	
-
-* 热门视频
-* 关注作者
+>4.26-27 移动端调试 ;P
