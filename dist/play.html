@@ -15,8 +15,8 @@
 		<a href='javascript:history.go(-1);' class='back'>返回</a>
 	</header>
 	<div class='playing'>
-	<video :src="url+d[0].src+'.mp4'" controls="controls" id='video'  ></video>
-	<div class='info'><p>{{d[0].name}}</p><span class='bgWhite'> #{{d[0].tag}} </span><span>{{d[0].username}}</span></div>
+	<video :src="url+d[0].src+'.mp4'" controls="controls" id='video'  autoplay="true"></video>
+	<div class='info'><p>&nbsp;{{d[0].name}}&nbsp;<span class='bgWhite'>&nbsp;#{{d[0].tag}}&nbsp;</span></p><span>{{d[0].username}}</span></div>
 	</div>
 	<div class='icons'>
 		<span @click='like()' class='icon active'>喜欢</span>
@@ -25,8 +25,7 @@
 		<a :href="url+d[0].src+'.mp4'" :download="d[0].name" class='icon'>下载</a>
 	</div>
 	<div v-if="show=='more'">
-		更多推荐
-		<div v-for="i in data" class='moreitem'>
+		<div v-for="i in more" class='moreitem'>
 		<a href='javascript:;' @click='toplay(i.name)' class='awrap'>
 		<img :src="url+i.src+'.png'" />
 		<div class='word'>
@@ -61,6 +60,7 @@
 <script src="../js/my_js.js"></script>
 <script src="../js/vue.js"></script>
 <script>
+window.onload=function(){
 new Vue({
 	el:"#app",
 	data:{
@@ -69,7 +69,7 @@ new Vue({
 		d:null,
 		url:serverIP,
 		show:"more",
-		data:[],
+		more:[],
 		comments:null,
 	},
 	methods:{
@@ -77,10 +77,11 @@ new Vue({
 			openI("play.html"+myParse({name:e}));
 		},
 		myimg:function(){
-			return this.url+storageG('userid')+this.videoname+'.png';
+			return this.url+storageG('username')+storageG('username')+'.png';
 		},
 		imgs:function(e){
-			return xhr("user/find",{name:e})[0].src;
+			var src=xhr("user/find",{name:e})[0].src
+			return this.url+src+'.png';
 		},
 		like:function(){
 			xhr("like/insert",{user:storageG("username"),name:this.videoname});
@@ -98,12 +99,14 @@ new Vue({
 		}
 	},
 	created:function(){
-		this.d=xhr("video/find",{name:this.videoname});
-		for(var i=0;i<3;i++){
-		this.data.push(this.d[Math.floor(Math.random()*10)]);
-		}
+		log(this.videoname)
+		this.d=xhr("video/find",{});
+		this.more=xhr("video/find",{tag:this.d[0].tag});
+		this.more.length=3;
+		log(this.more)
 	}
-})
+});
+}
 </script>
 </body>
 </html>

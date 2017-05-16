@@ -13,7 +13,7 @@
 	<div class='wrap'>
 		<div class='info'>
 		<img :src="url+d[0].src+'.png'" class='head' />
-		<p class='user'>{{d[0].name}}<span>修改</span></p>
+		<p class='user'>{{d[0].name}}</p>
 		<ul class='icons' v-if="switchs">
 		<li class='icon' :class='active==1?"theme":""' @click='like()'>收藏</li>
 		<li class='icon' :class='active==2?"theme":""' @click='comment()'>评论</li>
@@ -40,7 +40,7 @@
 		<p>{{i.word}}</p>
 		</div>
 	</div>
-	<div v-if="show=='issue'" v-for="j in data">
+	<div v-if="show=='issue'" v-for="j in data" class='issue'>
 		<a href='javascript:;' @click='toplay(j.name)'>
 		<img :src="url+j.src+'.png'" />
 		</a>

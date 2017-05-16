@@ -41,6 +41,10 @@
 	border:1px solid @theme;
 	border-radius:2px;
 }
+.themeHover{
+	background:@theme;
+	color:#000 !important;
+}
 .inputtext(@width:100%){
 	width:@width;
 	line-height:1.5;
@@ -99,7 +103,8 @@ header{
 /*login页面*/
 .login{
 	.equally;
-	margin-top:-5rem;
+	background: url(../img/bg.jpeg) no-repeat;
+	background-size: 100% 100%;
 	.wrap{
 		width:50%;
 		height:12rem;
@@ -217,6 +222,17 @@ header{
 }
 .fork{
 	.wrap{
+		.info{
+			.head{
+				.round(4rem);
+				margin:1rem;
+			}
+			.button{
+				.themeButton;
+				display:inline;
+				margin-left:1rem;
+			}
+		}
 		.item{
 			position:relative;
 			img{
@@ -302,11 +318,20 @@ header{
 			padding:1rem;
 			.imgleft;
 		}
+		.issue{
+			img{
+				width:100%;
+			}
+		}
 	}
 }
 /*play*/
 .play{
 	.wrap{
+		.head{
+			.round(4rem);
+			margin-bottom:1rem;
+		}
 		.active{
 			color:@theme;
 		}
@@ -337,9 +362,10 @@ header{
 		}
 		/*评论*/
 		.comments{
-			padding:1rem 1rem;
+			padding:0 1rem;
 			.mycomment,.comment{
 				.imgleft;
+				margin-top: 1rem;
 				.input{
 					width:60%;
 					.equally;
@@ -372,6 +398,17 @@ header{
 		}
 		video{
 			width:100%;
+		}
+	}
+}
+/*聊天页面*/
+.chat{
+	.wrap{
+		
+	}
+	.send{
+		input{
+			.inputtext;
 		}
 	}
 }

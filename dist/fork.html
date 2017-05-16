@@ -11,8 +11,12 @@
 <body>
 	<div id="app" class='fork'>
 	<div v-for="(index,i) in d" class="wrap">
-		作者名称：{{i.name}}头像：
-		全部视频：{{video[index].length}}
+	<div v-if="i.name != my_name">
+		<div class='info'>
+		<img :src="url+i.src+'.png'" class='head' />
+		<span>{{i.name}}</span>
+		<span class='button' @click="fork(i.name)" :class='forked(i.name)'>关注</span>
+		</div>
 		<div class='scrollitem'>
 		<div class='itemwrap' :style='width(video[index].length*100)'>
 			<div v-for="j in video[index]" class='item' :style='width(100/video[index].length)' @click='toplay(j.name)' >
@@ -23,8 +27,7 @@
 		</div>
 		</div>
 	</div>
-	
-	
+	</div>
 	</div>
 <script src="../js/my_js.js"></script>
 <script src="../js/vue.js"></script>
@@ -34,7 +37,8 @@ new Vue({
 	data:{
 		d:null,
 		video:[],
-		url:serverIP
+		url:serverIP,
+		my_name:storageG('username')
 	},
 	methods:{
 		toplay:function(e){
@@ -42,6 +46,13 @@ new Vue({
 		},
 		width:function(e){
 			return "width:"+e+"%;"
+		},
+		fork:function(e){
+			xhr("fork/insert",{user:storageG('username'),name:e})
+		},
+		forked:function(e){
+			var result=xhr("fork/find",{user:storageG('username'),name:e});
+			return result.length>0?"themeHover":""
 		}
 	},
 	created:function(){

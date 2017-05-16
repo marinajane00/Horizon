@@ -69,7 +69,7 @@ function capture(item,type,e){
 		canvas.width = item.width;  
 		canvas.height = item.height;
 	}
-    canvas.getContext('2d')  
+    canvas.getContext('2d')
        .drawImage(item, 0, 0, canvas.width, canvas.height); 
     var img = document.createElement("img");  
 	var result=canvas.toDataURL();
@@ -96,18 +96,23 @@ function upload(id,obj,load,loaded) {
 	}
 }
 //-------------------------------------------判断客户端
+document.addEventListener("plusready",plusReady,false);
+function plusReady(foo){
+	if (typeof (foo) == "function"){
+		foo();
+	}
+}
 //存储
 function storageS(name,value){
-	if(window.plus != undefined){
-		plus.storage.setItem(name,value);
+	if(window.plus){
+		plusReady(function(){ plus.storage.setItem(name,value);})
 	}else{
 		localStorage.setItem(name,value);
 	}
 }
 function storageG(name){
-	if(window.plus != undefined){
-		log(plus.storage.getItem(name))
-		return plus.storage.getItem(name);
+	if(window.plus){
+		return plusReady(function(){ return plus.storage.getItem(name);});
 	}else{
 		log(localStorage.getItem(name));
 		return localStorage.getItem(name);
@@ -115,16 +120,16 @@ function storageG(name){
 }
 //打开新页面
 function openP(e){
-	if(window.plus != undefined){
-		plus.webview.open(e,"slide-in-left");
+	if(window.plus){
+		plusReady(function(){ plus.webview.open(e,"slide-in-left");})
 	}else{
 		window.location.href=e;
 	}
 }
 //iframe打开新页面
 function openI(e){
-	if(window.plus != undefined){
-		plus.webview.open(e,"slide-in-left");
+	if(window.plus){
+		plusReady(function(){ plus.webview.open(e,"slide-in-left");})
 	}else{
 		parent.location.href=e;
 	}
@@ -132,10 +137,11 @@ function openI(e){
 function toast(e){
 	alert(e)
 }
-(function(){
-	if(window.plus != undefined){
-		plus.key.addEventListener("backbutton",function(){
-			history.go(-1)
-		});
-	}
-})();
+
+if(window.plus){
+	plusReady(function(){
+	plus.key.addEventListener("backbutton",function(){
+		history.go(-1)
+	});
+	})
+}

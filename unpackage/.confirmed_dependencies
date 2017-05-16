@@ -1,0 +1,118 @@
+{
+  "dist/play.html": {
+    "href": "dist/play.html",
+    "resources": [
+      "css/reset.css",
+      "css/my_less.css",
+      "css/less.min.js",
+      "js/my_js.js",
+      "js/vue.js"
+    ],
+    "refer": [
+      "dist/play.html"
+    ],
+    "priority": 0
+  },
+  "dist/home.html": {
+    "href": "dist/home.html",
+    "resources": [
+      "css/reset.css",
+      "css/my_less.css",
+      "css/less.min.js",
+      "js/my_js.js",
+      "js/vue.js"
+    ],
+    "refer": [
+      "dist/play.html"
+    ],
+    "priority": 0
+  },
+  "dist/public.html": {
+    "href": "dist/public.html",
+    "resources": [
+      "css/reset.css",
+      "css/my_less.css",
+      "css/less.min.js",
+      "js/my_js.js",
+      "js/vue.js"
+    ],
+    "refer": [],
+    "priority": 0
+  },
+  "dist/personal.html": {
+    "href": "dist/personal.html",
+    "resources": [
+      "css/reset.css",
+      "css/my_less.css",
+      "css/less.min.js",
+      "js/my_js.js",
+      "js/vue.js"
+    ],
+    "refer": [
+      "dist/play.html",
+      "dist/public.html"
+    ],
+    "priority": 0
+  },
+  "dist/fork.html": {
+    "href": "dist/fork.html",
+    "resources": [
+      "css/reset.css",
+      "css/my_less.css",
+      "css/less.min.js",
+      "js/my_js.js",
+      "js/vue.js"
+    ],
+    "refer": [
+      "dist/play.html"
+    ],
+    "priority": 0
+  },
+  "dist/discover.html": {
+    "href": "dist/discover.html",
+    "resources": [
+      "css/reset.css",
+      "css/my_less.css",
+      "css/less.min.js",
+      "js/my_js.js",
+      "js/vue.js"
+    ],
+    "refer": [
+      "dist/play.html"
+    ],
+    "priority": 0
+  },
+  "index.html": {
+    "href": "index.html",
+    "resources": [
+      "css/reset.css",
+      "css/my_less.css",
+      "css/less.min.js",
+      "js/my_js.js",
+      "js/vue.js",
+      "js/vue-router.js"
+    ],
+    "refer": [
+      "dist/home.html",
+      "dist/personal.html",
+      "dist/fork.html",
+      "dist/discover.html"
+    ],
+    "priority": 0
+  },
+  "dist/login.html": {
+    "href": "dist/login.html",
+    "resources": [
+      "css/reset.css",
+      "css/my_less.css",
+      "css/less.min.js",
+      "js/my_js.js",
+      "js/vue.js",
+      "img/head.png"
+    ],
+    "refer": [
+      "index.html"
+    ],
+    "priority": 0
+  }
+}

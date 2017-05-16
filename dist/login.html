@@ -39,6 +39,12 @@ new Vue({
 	},
 	methods:{
 		login:function(){
+			var sign=xhr("user/find",{name:$id('name').value,psw:$id('psw').value})
+			if(sign.length>0){
+				storageS("userid",sign[0]._id);
+				storageS("username",$id("name").value);
+				storageS("userpsw",$id("psw").value);
+			}else{
 			var data=xhr("user/insert",{name:$id('name').value,psw:$id('psw').value,src:$id('name').value+$id('name').value});
 			console.log(data.ops[0]._id);
 			storageS("userid",data.ops[0]._id);
@@ -49,7 +55,9 @@ new Vue({
 				userid:$id("name").value,
 				name:$id("name").value},
 			capture($id('myhead'),"img",$id('videoImg')));
+			}
 			openP("../index.html");
+			
 		},
 		myTrigger:function(){
 			my_file.click();
